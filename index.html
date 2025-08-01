@@ -110,7 +110,8 @@
         </div>
 
         <audio id="myAudio" loop style="display:none">
-            <source id="audioSource" src=https://rus.hitmotop.com/get/music/20250328/By_Indiya_-_ty_astronomicheski_79107448.mp3"" type="audio/mpeg">
+            <source src="https://rus.hitmotop.com/get/music/20250328/By_Indiya_-_ty_astronomicheski_79107448.mp3" type="audio/mpeg">
+            <source src="https://rus.hitmotop.com/get/music/20250328/By_Indiya_-_ty_astronomicheski_79107448.mp3" type="audio/ogg">
             Ваш браузер не поддерживает HTML5 аудио.
         </audio>
     </div>
@@ -176,15 +177,7 @@
 
         const messagesContainer = document.getElementById('messages');
         const audio = document.getElementById('myAudio');
-        const audioSource = document.getElementById('audioSource');
         let lastMessageTimeout;
-
-        // **ВАЖНО: Замените эту ссылку на фактический URL вашей песни**
-        const songURL = "ССЫЛКА_НА_ВАШУ_ПЕСНЮ.mp3";
-
-        // Устанавливаем URL для источника аудио
-        audioSource.src = songURL;
-        audio.load(); // Важно: перезагружаем аудио, чтобы применить изменения
 
         messages.forEach((message, index) => {
             lastMessageTimeout = setTimeout(() => {
@@ -236,6 +229,13 @@
 </body>
 </html>
 
+        }
+    </script>
 
 </body>
 </html>
+
+
+</body>
+</html>
+
