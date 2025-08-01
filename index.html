@@ -109,9 +109,8 @@
             <!-- Сообщения будут добавлены сюда JavaScript -->
         </div>
 
-        <audio id="myaudio.mp3" loop style="display:none">
-            <source src="путь_к_вашей_песне.mp3" type="audio/mpeg">
-            <source src="путь_к_вашей_песне.ogg" type="audio/ogg">
+        <audio id="myAudio" loop style="display:none">
+            <source id="https://drive.google.com/file/d/1tM8NGFcOuuH-jaQUby6fjCyblMFflk8U/view?usp=sharing" src="" type="audio/mpeg">
             Ваш браузер не поддерживает HTML5 аудио.
         </audio>
     </div>
@@ -177,7 +176,15 @@
 
         const messagesContainer = document.getElementById('messages');
         const audio = document.getElementById('myAudio');
+        const audioSource = document.getElementById('audioSource');
         let lastMessageTimeout;
+
+        // **ВАЖНО: Замените эту ссылку на фактический URL вашей песни**
+        const songURL = "ССЫЛКА_НА_ВАШУ_ПЕСНЮ.mp3";
+
+        // Устанавливаем URL для источника аудио
+        audioSource.src = songURL;
+        audio.load(); // Важно: перезагружаем аудио, чтобы применить изменения
 
         messages.forEach((message, index) => {
             lastMessageTimeout = setTimeout(() => {
@@ -228,6 +235,7 @@
 
 </body>
 </html>
+
 
 
 </body>
