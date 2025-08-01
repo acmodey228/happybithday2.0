@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>С Днем Рождения, Любимая!</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8bbd0; /* Светло-розовый фон */
+            margin: 0;
+            overflow: hidden; /* Скрываем полосы прокрутки */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            position: relative; /* Для позиционирования цветов */
+        }
+
+        .heart {
+            font-size: 2em;
+            color: #e91e63; /* Ярко-розовый цвет сердца */
+            margin-bottom: 20px;
+            animation: pulse 1.5s infinite alternate; /* Пульсирующая анимация сердца */
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+
+        .message {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 2em;
+            color: #e91e63; /* Ярко-розовый цвет текста */
+            animation: fall 5s forwards; /* Анимация падения текста */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Тень для текста */
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-100%); opacity: 0; }
+            100% { transform: translateY(100vh); opacity: 1; }
+        }
+
+        #container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Дополнительные стили для красоты */
+        h1 {
+            color: #d81b60; /* Более насыщенный розовый цвет */
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        p {
+            color: #c2185b; /* Ещё более насыщенный розовый */
+            font-size: 1.2em;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+            margin-bottom: 5px;
+        }
+
+        .flower {
+            position: absolute;
+            font-size: 1.5em;
+            animation: flowerFall linear forwards;
+            color: deeppink; /* Цвет цветов */
+        }
+
+        @keyframes flowerFall {
+            0% {
+                top: -10%;
+                opacity: 0;
+                transform: translateX(var(--flower-start-x)) rotate(0deg);
+            }
+            10% {
+                opacity: 1;
+            }
+            100% {
+                top: 110%;
+                opacity: 0;
+                transform: translateX(var(--flower-end-x)) rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="container">
+        <h1>С Днем Рождения, Любимая!</h1>
+
+        <div class="heart">
+            ♥♥♥♥♥♥♥♥♥♥♥♥♥<br>
+            ♥♥♥♥♥♥♥♥♥♥♥♥♥<br>
+            ♥♥♥♥♥♥♥♥♥♥♥♥♥<br>
+            ♥♥♥♥♥♥♥♥♥♥♥♥♥<br>
+            ♥♥♥♥♥♥♥♥♥♥♥♥♥<br>
+            ♥♥♥♥♥♥♥♥♥♥♥♥♥<br>
+        </div>
+
+        <div id="messages">
+            <!-- Сообщения будут добавлены сюда JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        const messages = [
+            "Ты мое солнце!",
+            "Ты моя радость!",
+            "Ты мой вдохновитель!",
+            "Люблю тебя больше всего на свете!",
+            "Прости меня:("
+        ];
+
+        const messagesContainer = document.getElementById('messages');
+        let lastMessageTimeout;
+
+        messages.forEach((message, index) => {
+            lastMessageTimeout = setTimeout(() => {
+                const messageElement = document.createElement('div');
+                messageElement.classList.add('message');
+                messageElement.textContent = message;
+                messagesContainer.appendChild(messageElement);
+
+                // Удаляем сообщение после окончания анимации
+                setTimeout(() => {
+                    messageElement.remove();
+                }, 5000);
+            }, index * 2000); // Задержка между сообщениями
+        });
+
+        // Запускаем град цветов после показа всех сообщений
+        const flowerDelay = messages.length * 2000; // Задержка в миллисекундах
+
+        lastMessageTimeout = setTimeout(() => {
+            startFlowerRain();
+        }, flowerDelay);
+
+
+        function startFlowerRain() {
+            const flowerSymbols = ['🌸', '🌷', '🌹', '🌺', '🌻']; // Разные символы цветов
+
+            function createFlower() {
+                const flower = document.createElement('div');
+                flower.classList.add('flower');
+                flower.textContent = flowerSymbols[Math.floor(Math.random() * flowerSymbols.length)];
+                flower.style.setProperty('--flower-start-x', `${Math.random() * 100}%`);
+                flower.style.setProperty('--flower-end-x', `${Math.random() * 100}%`);
+                flower.style.animationDuration = `${Math.random() * 5 + 5}s`; // Случайная продолжительность анимации
+                flower.style.left = `${Math.random() * 100}%`; // Случайное начальное положение по горизонтали
+
+                document.body.appendChild(flower);
+
+                flower.addEventListener('animationend', () => {
+                    flower.remove();
+                });
+            }
+
+            // Создаем цветы с определенным интервалом
+            setInterval(createFlower, 200); // Интервал 200 мс (можно изменить)
+        }
+    </script>
+
+</body>
+</html>
