@@ -110,7 +110,7 @@
         </div>
 
         <audio id="myAudio" loop style="display:none">
-            <source id="https://rus.hitmotop.com/get/music/20250328/By_Indiya_-_ty_astronomicheski_79107448.mp3" src="" type="audio/mpeg">
+            <source id="audioSource" src="" type="audio/mpeg">
             Ваш браузер не поддерживает HTML5 аудио.
         </audio>
     </div>
@@ -179,12 +179,43 @@
         const audioSource = document.getElementById('audioSource');
         let lastMessageTimeout;
 
-        // **ВАЖНО: Замените эту ссылку на фактический URL вашей песни**
-        const songURL = "ССЫЛКА_НА_ВАШУ_ПЕСНЮ.mp3";
+        //  ВАЖНО:  Замените  "ССЫЛКА_НА_ВАШУ_ПЕСНЮ.mp3"  на  ФАКТИЧЕСКИЙ ПРЯМОЙ URL ДЛЯ СКАЧИВАНИЯ вашей песни.
+        //  Например:  const songURL = "https://www.example.com/mysong.mp3";
+        //  ВНИМАНИЕ:  Google Drive НЕ предоставляет прямые ссылки для скачивания.  Используйте другой хостинг для аудиофайла,
+        //  например,  ваш собственный веб-сервер или облачное хранилище, которое предоставляет прямые ссылки (например, Amazon S3, Azure Blob Storage).
+        const songURL = "https://rus.hitmotop.com/get/music/20250328/By_Indiya_-_ty_astronomicheski_79107448.mp3";
+
 
         // Устанавливаем URL для источника аудио
         audioSource.src = songURL;
         audio.load(); // Важно: перезагружаем аудио, чтобы применить изменения
+
+        // Добавляем обработчик 'canplaythrough', чтобы дождаться готовности файла
+        audio.addEventListener('canplaythrough', () => {
+            console.log("Аудио готово к воспроизведению");
+            // Пытаемся воспроизвести звук
+            audio.play().then(() => {
+                // Воспроизведение началось успешно
+                console.log("Воспроизведение началось");
+            }).catch(error => {
+                // Ошибка воспроизведения (обычно из-за политики автовоспроизведения браузера)
+                console.error("Ошибка воспроизведения:", error);
+                // Здесь можно добавить кнопку "Play", чтобы пользователь мог вручную запустить воспроизведение
+                //  Пример:
+                //  const playButton = document.createElement('button');
+                //  playButton.textContent = 'Play Music';
+                //  playButton.addEventListener('click', () => { audio.play(); });
+                //  document.body.appendChild(playButton);
+            });
+        });
+
+        // Добавляем обработчик ошибок загрузки аудио
+        audio.addEventListener('error', (error) => {
+            console.error("Ошибка загрузки аудио:", error);
+            //  Здесь можно добавить код для отображения сообщения об ошибке пользователю.
+        });
+
+
 
         messages.forEach((message, index) => {
             lastMessageTimeout = setTimeout(() => {
@@ -205,7 +236,9 @@
 
         lastMessageTimeout = setTimeout(() => {
             startFlowerRain();
-            audio.play();
+
+            // audio.play() уже был вызван в обработчике canplaythrough, поэтому здесь не нужно его вызывать повторно.
+            //  Если автовоспроизведение блокируется браузером, то  нужно добавить кнопку "Play" и запускать audio.play() по клику на нее.
         }, flowerDelay);
 
 
@@ -232,11 +265,6 @@
             setInterval(createFlower, 200); // Интервал 200 мс (можно изменить)
         }
     </script>
-
-</body>
-</html>
-
-
 
 </body>
 </html>
